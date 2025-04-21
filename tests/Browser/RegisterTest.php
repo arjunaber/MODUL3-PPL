@@ -2,23 +2,29 @@
 
 namespace Tests\Browser;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use App\Models\User;
+use App\Models\Note;
 use Laravel\Dusk\Browser;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\DuskTestCase;
 
 class RegisterTest extends DuskTestCase
 {
-    use DatabaseMigrations;
-    public function testExample(): void
+    
+
+    public function test_user_can_register()
     {
         $this->browse(function (Browser $browser) {
-            // Automatic Testing Register
-            $browser->visit('http://127.0.0.1:8000/register') // mengunjungi halaman register
-                ->type('name', 'arjuna') // mengisi nama
-                ->type('email', 'arjunaaber2@gmail.com') // megnisi email dan mengecek jika email sudah terdaftar
-                ->type('password', 'password') // mengisi password
-                ->type('password_confirmation', 'password') // mengisi konfirmasi password
-                ->press('REGISTER'); // Click register button
-        }); 
+            // Register
+            $browser->visit('/register') //masuk ke halaman register
+                ->type('name', 'Dusk User') //mengisi nama
+                ->type('email', 'duskuser@example.com') //mengisi email
+                ->type('password', 'password') //mengisi password
+                ->type('password_confirmation', 'password') //mengisi konfirmasi password
+                ->press('REGISTER') //menekan tombol register
+                ->assertPathIs('/dashboard') //memastikan sudah masuk ke halaman dashboard
+                ->press('Dusk User') //menekan nama user
+                ->clickLink('Log Out'); //menekan tombol logout
+        });
     }
 }

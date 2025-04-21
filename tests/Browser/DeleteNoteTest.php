@@ -9,15 +9,26 @@ use Tests\DuskTestCase;
 class DeleteNoteTest extends DuskTestCase
 {
     /**
-     * A Dusk test example.
+     * A Dusk test for deleting a note.
      */
     public function testExample(): void
     {
         $this->browse(function (Browser $browser) {
              // Delete Note
-             $browser->visit('/notes') // mengunjungi halaman notes
-             ->press('Delete') // klik delete button
-             ->assertDontSee('Dusk Test Note Updated'); // check jika note sudah terhapus
+             $browser
+            ->visit('/login') // mengunjungi halaman login
+            ->type('email', 'duskuser@example.com') // mengisi email
+            ->type('password', 'password') // mengisi password
+            ->press('LOG IN') // menekan tombol login
+            ->assertPathIs('/dashboard') // memastikan sudah masuk ke halaman dashboard
+            ->clickLink('Notes') // menekan tombol notes
+            ->pause(1000) // menunggu proses loading
+            ->click('#delete-5') // langsung klik tombol dengan ID sesuai di inspect yang saya lihat idnya adalah 5
+            ->assertPathIs('/notes') // memastikan diarahkan kembali ke halaman notes
+            ->assertSee('Note has been deleted') // memastikan pesan berhasil muncul
+            ->press('Dusk User') // menekan nama user
+            ->clickLink('Log Out') // menekan tombol logout
+            ->assertPathIs('/'); // memastikan sudah logout
         });
     }
 }

@@ -2,28 +2,28 @@
 
 namespace Tests\Browser;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use App\Models\User;
+use App\Models\Note;
 use Laravel\Dusk\Browser;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\DuskTestCase;
 
 class LogoutTest extends DuskTestCase
 {
-    /**
-     * A Dusk test example.
-     */
-    public function testExample(): void
+    
+
+    public function test_user_can_logout()
     {
         $this->browse(function (Browser $browser) {
-            // Logout
-            $browser->visit('/login') // mengunjungi halaman login
-         ->assertSee('Login') // check jika halaman login
-         ->type('email', 'duskuser@example.com')// mengisi email 
-         ->type('password', 'password') // mengisi password
-         ->press('Log in') // klik login button
-            ->assertPathIs('/dashboard') // check jika redirect ke dashboard
-            ->assertSee('Dashboard') // check jika halaman dashboard
-            ->press('Logout'); // klik logout button
-            
-        });
+            //Automatic Testing Logout 
+            $browser 
+            ->visit('/login') // mengunjungi halaman login
+            ->type('email', 'duskuser@example.com') // mengisi email
+            ->type('password', 'password') // mengisi password
+            ->press('LOG IN') // menekan tombol login
+            ->assertPathIs('/dashboard') // memastikan sudah masuk ke halaman dashboard
+            ->press('Dusk User') // menekan nama user
+            ->clickLink('Log Out'); // menekan tombol logout
+            });
     }
 }
